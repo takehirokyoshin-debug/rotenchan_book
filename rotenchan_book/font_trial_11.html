@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>11ページ フォント比較</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+      background: #e9eef1;
+      color: #3f3830;
+      font-family: "Yu Gothic", "Hiragino Sans", "Meiryo", sans-serif;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(320px, 1fr));
+      gap: 18px;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
+    .trial {
+      background: #fff;
+      box-shadow: 0 12px 32px rgba(52, 60, 67, 0.18);
+    }
+
+    .label {
+      padding: 10px 14px;
+      font-size: 15px;
+      color: #53646d;
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(83, 100, 109, 0.12);
+    }
+
+    .page {
+      position: relative;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+    }
+
+    .page img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .text {
+      position: absolute;
+      left: 7%;
+      top: 8%;
+      width: 46%;
+      padding: 0;
+      color: #2f2a25;
+      font-size: clamp(13px, 1.55vw, 23px);
+      font-weight: 400;
+      line-height: 1.9;
+      letter-spacing: 0;
+      text-shadow:
+        0 0 5px rgba(255, 255, 255, 1),
+        0 0 10px rgba(255, 255, 255, 0.98),
+        0 0 18px rgba(255, 255, 255, 0.94),
+        1px 1px 3px rgba(255, 255, 255, 1),
+        -1px -1px 3px rgba(255, 255, 255, 1);
+    }
+
+    .text p {
+      margin: 0;
+    }
+
+    .text p + p {
+      margin-top: 0.85em;
+    }
+
+    .font-yu {
+      font-family: "Yu Gothic", "Hiragino Sans", "Meiryo", sans-serif;
+    }
+
+    .font-meiryo {
+      font-family: "Meiryo", "Yu Gothic", sans-serif;
+    }
+
+    .font-biz {
+      font-family: "BIZ UDPGothic", "Yu Gothic", "Meiryo", sans-serif;
+    }
+
+    .font-mincho {
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", "BIZ UDPMincho", serif;
+      font-weight: 500;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 12px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .text {
+        width: 58%;
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="grid">
+    <section class="trial">
+      <div class="label">A: Yu Gothic</div>
+      <div class="page">
+        <img src="assets/page11_puddle_absorb.png" alt="">
+        <div class="text font-yu">
+          <p>水たまりでも同じです。</p>
+          <p>小さな子たちは、いっしょうけんめい<br>水を頭のコップに集めています。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="trial">
+      <div class="label">B: Meiryo</div>
+      <div class="page">
+        <img src="assets/page11_puddle_absorb.png" alt="">
+        <div class="text font-meiryo">
+          <p>水たまりでも同じです。</p>
+          <p>小さな子たちは、いっしょうけんめい<br>水を頭のコップに集めています。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="trial">
+      <div class="label">C: BIZ UDPGothic</div>
+      <div class="page">
+        <img src="assets/page11_puddle_absorb.png" alt="">
+        <div class="text font-biz">
+          <p>水たまりでも同じです。</p>
+          <p>小さな子たちは、いっしょうけんめい<br>水を頭のコップに集めています。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="trial">
+      <div class="label">D: Yu Mincho</div>
+      <div class="page">
+        <img src="assets/page11_puddle_absorb.png" alt="">
+        <div class="text font-mincho">
+          <p>水たまりでも同じです。</p>
+          <p>小さな子たちは、いっしょうけんめい<br>水を頭のコップに集めています。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

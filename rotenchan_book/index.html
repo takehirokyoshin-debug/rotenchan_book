@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>初めまして ろてんちゃんです</title>
+  <style>
+    :root {
+      --paper: rgba(255, 252, 244, 0.54);
+      --ink: #3f3830;
+      --accent: #6aa8c8;
+      --shadow: rgba(52, 60, 67, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #e9eef1;
+      font-family: "Meiryo", "Yu Gothic", "Hiragino Sans", sans-serif;
+      color: var(--ink);
+    }
+
+    .shell {
+      width: min(96vw, 1220px);
+    }
+
+    .book-page {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 18px 50px var(--shadow);
+    }
+
+    .book-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .text-panel {
+      position: absolute;
+      width: min(40%, 440px);
+      padding: clamp(17px, 2.4vw, 30px);
+      border-left: 0;
+      background: transparent;
+      backdrop-filter: none;
+      line-height: 1.9;
+      font-size: clamp(15px, 1.75vw, 24px);
+      font-weight: 400;
+      letter-spacing: 0;
+      word-break: keep-all;
+      overflow-wrap: normal;
+      text-shadow:
+        0 0 5px rgba(255, 255, 255, 1),
+        0 0 10px rgba(255, 255, 255, 0.98),
+        0 0 18px rgba(255, 255, 255, 0.94),
+        1px 1px 3px rgba(255, 255, 255, 1),
+        -1px -1px 3px rgba(255, 255, 255, 1);
+    }
+
+    .text-panel p {
+      margin: 0;
+    }
+
+    .text-panel p + p {
+      margin-top: 0.85em;
+    }
+
+    .title-panel {
+      width: min(45%, 520px);
+      padding: clamp(22px, 3vw, 38px);
+    }
+
+    .title-image {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .end-image {
+      display: block;
+      width: min(58%, 420px);
+      height: auto;
+      margin: 0 auto;
+      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 1))
+        drop-shadow(0 0 12px rgba(255, 255, 255, 0.92));
+    }
+
+    .pos-left {
+      left: clamp(22px, 5vw, 70px);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .pos-right {
+      right: clamp(22px, 5vw, 70px);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .pos-bottom-left {
+      left: clamp(22px, 5vw, 70px);
+      bottom: clamp(22px, 5vw, 58px);
+    }
+
+    .pos-bottom-right {
+      right: clamp(22px, 5vw, 70px);
+      bottom: clamp(22px, 5vw, 58px);
+    }
+
+    .pos-top-left {
+      left: clamp(22px, 5vw, 70px);
+      top: clamp(22px, 5vw, 58px);
+    }
+
+    .pos-top-right {
+      right: clamp(22px, 5vw, 70px);
+      top: clamp(22px, 5vw, 58px);
+    }
+
+    .pos-wide-bottom {
+      left: clamp(22px, 5vw, 70px);
+      right: clamp(22px, 5vw, 70px);
+      bottom: clamp(22px, 4vw, 42px);
+      width: auto;
+    }
+
+    .pos-end {
+      left: 50%;
+      bottom: clamp(26px, 5vw, 70px);
+      width: min(44%, 480px);
+      padding: 0;
+      transform: translateX(-50%);
+      text-shadow: none;
+    }
+
+    .text-wide {
+      width: min(47%, 520px);
+    }
+
+    .text-extra-wide {
+      width: min(54%, 600px);
+    }
+
+    .text-narrow {
+      width: min(31%, 330px);
+    }
+
+    .pos-page2 {
+      left: clamp(16px, 4vw, 54px);
+      top: clamp(18px, 4vw, 48px);
+    }
+
+    ruby {
+      ruby-align: center;
+    }
+
+    rt {
+      font-size: 0.48em;
+      line-height: 1;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 16px 0 0;
+    }
+
+    button {
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #41525b;
+      box-shadow: 0 8px 24px rgba(52, 60, 67, 0.18);
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    .page-count {
+      min-width: 80px;
+      text-align: center;
+      font-size: 15px;
+      color: #53646d;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        align-items: start;
+        padding: 12px;
+      }
+
+      .book-page {
+        aspect-ratio: 2 / 3;
+      }
+
+      .book-image {
+        object-position: center;
+      }
+
+      .text-panel,
+      .title-panel {
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        top: auto;
+        width: auto;
+        transform: none;
+        padding: 16px 17px;
+        font-size: 16px;
+        line-height: 1.75;
+      }
+
+      .book-title {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="book-page" aria-label="絵本ページ">
+      <img class="book-image" id="pageImage" alt="">
+      <article class="text-panel" id="pageText"></article>
+    </section>
+    <nav class="controls" aria-label="ページ送り">
+      <button id="prev" type="button" aria-label="前のページ">‹</button>
+      <span class="page-count" id="pageCount"></span>
+      <button id="next" type="button" aria-label="次のページ">›</button>
+    </nav>
+  </main>
+
+  <script>
+    const pages = [
+      {
+        image: "assets/page01_cover.png",
+        position: "pos-top-right title-panel",
+        html: `
+          <img class="title-image" src="assets/title_handdrawn.png" alt="はじめまして ろてんちゃんです">
+        `
+      },
+      {
+        image: "assets/page02_intro.png",
+        position: "pos-page2 text-narrow",
+        html: `
+          <p>女の子は、身のまわりの<br>ふしぎを見つけることが<br>大好きです。</p>
+          <p>見るたびに、心の中で<br>つぶやきます。</p>
+          <p>なぜだろう。</p>
+        `
+      },
+      {
+        image: "assets/page03_laundry_question.png",
+        position: "pos-bottom-left",
+        html: `
+          <p>お日さまの下にほした<ruby>洗濯物<rt>せんたくもの</rt></ruby>は、<br>だんだんかわいていきます。</p>
+          <p>ぬれていた水は、<br>どこへいったのでしょう。</p>
+          <p>なぜだろう。</p>
+        `
+      },
+      {
+        image: "assets/page04_puddle_question.png",
+        position: "pos-top-right text-wide",
+        html: `
+          <p>雨あがりの水たまりも、<br>いつのまにか小さくなります。</p>
+          <p>水は、消えてしまったのでしょうか。</p>
+          <p>なぜだろう。</p>
+        `
+      },
+      {
+        image: "assets/page05_glass_question.png",
+        position: "pos-bottom-left",
+        html: `
+          <p><ruby>冷<rt>つめ</rt></ruby>たいジュースの入ったグラス。</p>
+          <p>外がわには、小さな水のつぶが<br>ついています。</p>
+          <p>中の水は、こぼれていないのに。</p>
+          <p>なぜだろう。</p>
+        `
+      },
+      {
+        image: "assets/page06_winter_window.png",
+        position: "pos-bottom-right",
+        html: `
+          <p>冬の朝、まどガラスにも<br>水のつぶがついています。</p>
+          <p>水って、どこへ行ったり、<br>どこから来たりするのでしょう。</p>
+        `
+      },
+      {
+        image: "assets/page07_first_glimpse.png",
+        position: "pos-bottom-left",
+        html: `
+          <p>ある日、<ruby>洗濯物<rt>せんたくもの</rt></ruby>を見ていると、<br>小さな白いものが、ぽん、と<br>ぶつかりました。</p>
+          <p>女の子は、目をまるくしました。</p>
+        `
+      },
+      {
+        image: "assets/page08_many_rotenchan.png",
+        position: "pos-bottom-right",
+        html: `
+          <p>よく見ると、小さな子たちが<br>たくさん<ruby>飛<rt>と</rt></ruby>びまわっています。</p>
+          <p>その<ruby>頭<rt>あたま</rt></ruby>は、<ruby>透明<rt>とうめい</rt></ruby>なコップで<br>できていました。</p>
+        `
+      },
+      {
+        image: "assets/page09_laundry_absorb.png",
+        position: "pos-bottom-left",
+        html: `
+          <p>小さな子が<ruby>洗濯物<rt>せんたくもの</rt></ruby>にぶつかるたび、<br>水のつぶが<ruby>頭<rt>あたま</rt></ruby>のコップへ<br>入っていきます。</p>
+          <p>もしかして……。</p>
+        `
+      },
+      {
+        image: "assets/page10_water_travels.png",
+        position: "pos-top-left",
+        html: `
+          <p>水は消えたのではなく、<br>小さな子たちが空気の中へ<br><ruby>運<rt>はこ</rt></ruby>んでいるのかもしれません。</p>
+        `
+      },
+      {
+        image: "assets/page11_puddle_absorb.png",
+        position: "pos-top-left text-wide",
+        html: `
+          <p>水たまりでも同じです。</p>
+          <p>小さな子たちは、いっしょうけんめい<br>水を<ruby>頭<rt>あたま</rt></ruby>のコップに<ruby>集<rt>あつ</rt></ruby>めています。</p>
+        `
+      },
+      {
+        image: "assets/page12_air_journey.png",
+        position: "pos-bottom-right",
+        html: `
+          <p>水は、空気の中を<br><ruby>旅<rt>たび</rt></ruby>しているのかもしれません。</p>
+          <p>女の子の「なぜだろう」は、<br>少しずつ「もしかして」に<br>変わっていきました。</p>
+        `
+      },
+      {
+        image: "assets/page13_warm_big_cup.png",
+        position: "pos-bottom-right text-wide",
+        html: `
+          <p>あたたかい空気の中では、<br>小さな子の<ruby>頭<rt>あたま</rt></ruby>のコップは<br>大きくなっています。</p>
+          <p>水が入っていても、まだ<ruby>余裕<rt>よゆう</rt></ruby>があります。</p>
+        `
+      },
+      {
+        image: "assets/page14_cool_small_cup.png",
+        position: "pos-bottom-right text-extra-wide",
+        html: `
+          <p>夕方になって空気がひんやりすると、<ruby>頭<rt>あたま</rt></ruby>のコップは小さくなりました。</p>
+          <p>同じ水の<ruby>量<rt>りょう</rt></ruby>でも、もうすぐいっぱいです。</p>
+        `
+      },
+      {
+        image: "assets/page15_cold_glass_touch.png",
+        position: "pos-bottom-left",
+        html: `
+          <p><ruby>冷<rt>つめ</rt></ruby>たいグラスにふれたとたん、<br><ruby>頭<rt>あたま</rt></ruby>のコップが、きゅっと<br>小さくなりました。</p>
+          <p>水は、ふちまでいっぱいです。</p>
+        `
+      },
+      {
+        image: "assets/page16_roten_moment.png",
+        position: "pos-bottom-left",
+        html: `
+          <p>そのとき、小さな音がしました。</p>
+          <p>……ろてん。</p>
+          <p><ruby>頭<rt>あたま</rt></ruby>のコップからこぼれた水が、<br>グラスの外がわにつきました。</p>
+        `
+      },
+      {
+        image: "assets/page17_naming.png",
+        position: "pos-bottom-left",
+        html: `
+          <p>女の子は、にっこりしました。</p>
+          <p>「あなたは、ろてんちゃん。」</p>
+          <p>水のつぶは、ろてんちゃんが<br>こぼした水だったのです。</p>
+        `
+      },
+      {
+        image: "assets/page18_window_roten.png",
+        position: "pos-bottom-left",
+        html: `
+          <p>冬のまどでも同じでした。</p>
+          <p><ruby>冷<rt>つめ</rt></ruby>たいガラスにふれた<br>ろてんちゃんたちは、<br>水をこぼしてしまいます。</p>
+          <p>ろてん、ろてん。</p>
+        `
+      },
+      {
+        image: "assets/page19_temperature_realization.png",
+        position: "pos-bottom-left",
+        html: `
+          <p>女の子は気づきました。</p>
+          <p><ruby>冷<rt>つめ</rt></ruby>たくなると、ろてんちゃんは<br>水を<ruby>持<rt>も</rt></ruby>ちきれなくなるんだ。</p>
+          <p>もしかして、それが<br>水のつぶになるのかな。</p>
+        `
+      },
+      {
+        image: "assets/page20_car_to_mountain.png",
+        position: "pos-bottom-right",
+        html: `
+          <p>ある日、女の子は<ruby>家族<rt>かぞく</rt></ruby>と<br>山へキャンプに行きました。</p>
+          <p>車のまどから、ろてんちゃんたちが<br>空高くのぼっていくのが見えました。</p>
+        `
+      },
+      {
+        image: "assets/page21_mountain_camp.png",
+        position: "pos-bottom-right",
+        html: `
+          <p>山につくと、町にいたときより<br>空気がひんやりしています。</p>
+          <p>女の子は空を見上げました。</p>
+          <p>もしかして……。</p>
+        `
+      },
+      {
+        image: "assets/page22_sky_spill.png",
+        position: "pos-bottom-right",
+        html: `
+          <p>空の高いところで、<br>ろてんちゃんたちの<ruby>頭<rt>あたま</rt></ruby>のコップが<br>小さくなっていました。</p>
+          <p>そして、水が少しずつ<br>こぼれていきます。</p>
+        `
+      },
+      {
+        image: "assets/page23_cloud.png",
+        position: "pos-bottom-right",
+        html: `
+          <p>近くで見ると、ろてんちゃんが<br>こぼした小さな水のつぶ。</p>
+          <p>遠くから見ると、<br>それは白い<ruby>雲<rt>くも</rt></ruby>でした。</p>
+        `
+      },
+      {
+        image: "assets/page24_forecaster.png",
+        position: "pos-bottom-right",
+        html: `
+          <p>女の子は、大きくなって、<br><ruby>気象予報士<rt>きしょうよほうし</rt></ruby>になりました。</p>
+          <p><ruby>雲<rt>くも</rt></ruby>ができるしくみも、<br>雨のはじまりも、<br>ちゃんと<ruby>説明<rt>せつめい</rt></ruby>できます。</p>
+          <p>でも、心の中では思っています。</p>
+          <p>ほんとうは　ろてんちゃんたちの<br><ruby>仕業<rt>しわざ</rt></ruby>なんだけどね。</p>
+        `
+      },
+      {
+        image: "assets/page25_oshimai.png",
+        position: "pos-end",
+        html: `
+          <img class="end-image" src="assets/end_oshimai.png" alt="おしまい">
+        `
+      }
+    ];
+
+    const image = document.getElementById("pageImage");
+    const text = document.getElementById("pageText");
+    const count = document.getElementById("pageCount");
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+    const assetVersion = "20260603-1831";
+    let current = Number(new URLSearchParams(location.search).get("p")) || 1;
+
+    function render() {
+      current = Math.min(Math.max(current, 1), pages.length);
+      const page = pages[current - 1];
+      image.src = `${page.image}?v=${assetVersion}`;
+      image.alt = `ページ${current}の挿絵`;
+      text.className = `text-panel ${page.position}`;
+      text.innerHTML = page.html;
+      count.textContent = `${current} / ${pages.length}`;
+      prev.disabled = current === 1;
+      next.disabled = current === pages.length;
+      history.replaceState(null, "", `?p=${current}`);
+    }
+
+    prev.addEventListener("click", () => {
+      current -= 1;
+      render();
+    });
+
+    next.addEventListener("click", () => {
+      current += 1;
+      render();
+    });
+
+    addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft" && current > 1) {
+        current -= 1;
+        render();
+      }
+      if (event.key === "ArrowRight" && current < pages.length) {
+        current += 1;
+        render();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
