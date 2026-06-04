@@ -234,6 +234,86 @@
         font-size: 30px;
       }
     }
+
+    /* iPhoneなど、横向き時に横幅は広いが縦幅が低い端末向け */
+    @media (orientation: landscape) and (max-height: 600px) {
+      body {
+        min-height: 100dvh;
+        padding:
+          max(6px, env(safe-area-inset-top))
+          max(8px, env(safe-area-inset-right))
+          max(6px, env(safe-area-inset-bottom))
+          max(8px, env(safe-area-inset-left));
+        overflow: auto;
+      }
+
+      .shell {
+        width: min(
+          96vw,
+          calc((100dvh - 58px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 1.5)
+        );
+      }
+
+      .book-page {
+        aspect-ratio: 3 / 2;
+      }
+
+      .text-panel {
+        padding: clamp(7px, 1.8vh, 13px);
+        font-size: clamp(9px, 2.7vh, 15px);
+        line-height: 1.7;
+      }
+
+      .text-panel p + p {
+        margin-top: 0.55em;
+      }
+
+      .pos-left,
+      .pos-bottom-left,
+      .pos-top-left {
+        left: clamp(10px, 3vw, 30px);
+      }
+
+      .pos-right,
+      .pos-bottom-right,
+      .pos-top-right {
+        right: clamp(10px, 3vw, 30px);
+      }
+
+      .pos-bottom-left,
+      .pos-bottom-right,
+      .pos-wide-bottom,
+      .pos-end {
+        bottom: clamp(8px, 3vh, 20px);
+      }
+
+      .pos-top-left,
+      .pos-top-right,
+      .pos-page2 {
+        top: clamp(8px, 3vh, 20px);
+      }
+
+      .title-panel {
+        width: min(44%, 420px);
+        padding: 8px;
+      }
+
+      .controls {
+        gap: 10px;
+        padding-top: 6px;
+      }
+
+      button {
+        width: 36px;
+        height: 36px;
+        font-size: 21px;
+      }
+
+      .page-count {
+        min-width: 64px;
+        font-size: 13px;
+      }
+    }
   </style>
 </head>
 <body>
